@@ -1,4 +1,4 @@
-package test.identify;
+package identify;
 
 import org.testng.annotations.Test;
 

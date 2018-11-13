@@ -1,4 +1,4 @@
-package test.identify;
+package identify;
 
 import java.io.Externalizable;
 import java.io.FileInputStream;
