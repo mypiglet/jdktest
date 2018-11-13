@@ -8,9 +8,10 @@
 	<packaging>jar</packaging>
 
 	<name>jdktest</name>
-	<url>http://maven.apache.org</url>
+	<url>http://test.mypiglet.org</url>
 
 	<properties>
+		<java.version>1.8</java.version>
 		<testng.version>6.10</testng.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -23,4 +24,16 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
