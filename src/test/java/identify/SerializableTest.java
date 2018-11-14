@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
  * 使用transient关键字修饰的的变量，在序列化对象的过程中，该属性不会被序列化;实现Externalizable接口可以自定义哪些属性序列化，
  * 此时需提供默认构造函数；
  * 
- * @author dinghx14714
+ * @author mypiglet
  *
  */
 public class SerializableTest {

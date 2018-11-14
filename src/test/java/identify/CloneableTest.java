@@ -4,10 +4,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
+ * 在java.lang包里；
  * 标记接口(Mark Interface);
  * 如果试图用一个不支持Cloneable接口的类调用clone( )方法，将引发一个CloneNotSupportedException异常；
  * 
- * @author dinghx14714
+ * @author mypiglet
  *
  */
 public class CloneableTest {

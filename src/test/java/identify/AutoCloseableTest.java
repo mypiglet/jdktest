@@ -4,11 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * 实现自动关闭资源,在java.lang包中; 在1.7之前，我们通过try{} finally{} 在finally中释放资源;
+ * 在java.lang包里；
+ * 实现自动关闭资源; 在1.7之前，我们通过try{} finally{} 在finally中释放资源;
  * 对于实现AutoCloseable接口的类的实例，将其放到try后面（我们称之为：带资源的try语句），在try结束的时候，会自动将这些资源关闭（
  * 调用close方法）; 在try代码中声明的资源被隐式声明为fianl； Closeable扩展了AutoCloseable;
  * 
- * @author dinghx14714
+ * @author mypiglet
  *
  */
 public class AutoCloseableTest {
