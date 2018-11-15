@@ -90,7 +90,7 @@ public class ResultSetTest extends ConnectionTest {
 	}
 
 	/**
-	 * TYPE_SCROLL_SENSITIVE验证 -没起作用；
+	 * TYPE_SCROLL_SENSITIVE验证【没起作用】；
 	 */
 	@Test(enabled = false)
 	public void test3() throws ClassNotFoundException, SQLException {
@@ -109,10 +109,10 @@ public class ResultSetTest extends ConnectionTest {
 		}
 
 	}
-	
-	@Test(enabled = true)
+
+	@Test(enabled = false)
 	public void test4() throws ClassNotFoundException, SQLException {
-		
+
 		Connection connection = this.getNewConnection();
 		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = statement.executeQuery("select * from demo_user where id=2");
@@ -123,16 +123,34 @@ public class ResultSetTest extends ConnectionTest {
 		}
 
 	}
-	
+
 	/**
+	 * 验证【没起作用】
 	 * 可保持性（Holdability）; 指当ResultSet的结果被提交时，是被关闭还是不被关闭;
 	 * 在JDBC3.0中，我们可以设置ResultSet是否关闭; 可保持性级别：
 	 * 1、ResultSet.HOLD_CURSORS_OVER_COMMIT（1）:表示修改提交时，不关闭数据库;
 	 * 2、ResultSet.CLOSE_CURSORS_AT_COMMIT（2）：表示修改提交时ResultSet关闭;
+	 * 
 	 */
-	@Test
-	public void holdabilityTest(){
-		
+	@Test(enabled = false)
+	public void holdabilityTest() throws SQLException, ClassNotFoundException {
+
+		Connection connection = this.getNewConnection();
+		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY,
+				ResultSet.HOLD_CURSORS_OVER_COMMIT);
+		ResultSet rs = statement.executeQuery("select * from demo_user where id=1");
+		System.out.println("rs：" + rs.isClosed());
+		ResultSet rs2 = statement.executeQuery("select * from demo_user where id=2");
+		System.out.println("rs：" + rs.isClosed());
+		System.out.println("rs2：" + rs2.isClosed());
+
+		while (rs2.next()) {
+			System.out.println(rs2.getString("password"));
+		}
+		while (rs.next()) {
+			System.out.println(rs.getString("password"));
+		}
+
 	}
 
 }

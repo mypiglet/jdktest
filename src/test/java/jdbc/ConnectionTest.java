@@ -80,12 +80,36 @@ public class ConnectionTest {
 	public void setConnection(Connection connection) {
 		this.connection = connection;
 	}
-	
+
+	/**
+	 * 在PreparedStatement中开启预编译功能； 设置MySQL连接URL参数：useServerPrepStmts=true；
+	 * 
+	 * 当使用不同的PreparedStatement对象来执行相同的SQL语句时，还是会出现编译两次的现象，这是因为驱动没有缓存编译后的函数key，
+	 * 导致二次编译； 如果希望缓存编译后函数的key，那么就要设置cachePrepStmts参数为true；
+	 * 
+	 * MySql的JDBC连接的url中要加rewriteBatchedStatements参数，并保证5.1.13以上版本的驱动，
+	 * 才能实现高性能的批量插入；
+	 */
 	public Connection getNewConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
 		return DriverManager.getConnection(
-				"jdbc:mysql://127.0.0.1:3306/spring_rest?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true", "root",
-				"123456");
+				"jdbc:mysql://127.0.0.1:3306/spring_rest?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true",
+				"root", "123456");
 	}
+
+	/*
+	 * PreparedStatement的预编译是数据库进行的，
+	 * 编译后的函数key是缓存在PreparedStatement中的，编译后的函数是缓存在数据库服务器中的。预编译前有检查sql语句语法是否正确的操作
+	 * 。只有数据库服务器支持预编译功能时，JDBC驱动才能够使用数据库的预编译功能，否则会报错。预编译在比较新的JDBC驱动版本中默认是关闭的，
+	 * 需要配置连接参数才能够打开。在已经配置好了数据库连接参数的情况下，Statement对于MySQL数据库是不会对编译后的函数进行缓存的，
+	 * 数据库不会缓存函数，Statement也不会缓存函数的key，所以多次执行相同的一条sql语句的时候，还是会先检查sql语句语法是否正确，
+	 * 然后编译sql语句成函数，最后执行函数。 对于PreparedStatement在设置参数的时候会对参数进行转义处理。
+	 * 因为PreparedStatement已经对sql模板进行了编译，并且存储了函数，
+	 * 所以PreparedStatement做的就是把参数进行转义后直接传入参数到数据库，然后让函数执行。
+	 * 这就是为什么PreparedStatement能够防止sql注入攻击的原因了。
+	 * PreparedStatement的预编译还有注意的问题，在数据库端存储的函数和在PreparedStatement中存储的key值，
+	 * 都是建立在数据库连接的基础上的，如果当前数据库连接断开了，数据库端的函数会清空，
+	 * 建立在连接上的PreparedStatement里面的函数key也会被清空，各个连接之间的预编译都是互相独立的。
+	 */
 
 }
