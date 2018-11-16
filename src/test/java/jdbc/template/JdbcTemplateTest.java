@@ -290,6 +290,7 @@ public class JdbcTemplateTest extends DataSourceTest {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static class User {
 
 		/**
@@ -317,7 +318,6 @@ public class JdbcTemplateTest extends DataSourceTest {
 			this.id = id;
 		}
 
-		@SuppressWarnings("unused")
 		public String getName() {
 			return name;
 		}
@@ -326,7 +326,6 @@ public class JdbcTemplateTest extends DataSourceTest {
 			this.name = name;
 		}
 
-		@SuppressWarnings("unused")
 		public String getPassword() {
 			return password;
 		}
@@ -335,7 +334,6 @@ public class JdbcTemplateTest extends DataSourceTest {
 			this.password = password;
 		}
 
-		@SuppressWarnings("unused")
 		public Date getCreated() {
 			return created;
 		}

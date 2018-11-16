@@ -1,12 +1,12 @@
 package jdbc.template;
 
-import java.sql.JDBCType;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.testng.Assert;
@@ -16,42 +16,54 @@ import org.testng.annotations.Test;
 import jdbc.pool.DataSourceTest;
 
 /**
- * NamedParameterJdbcTemplate基础方法验证
+ * 常用简化代码示例
  * 
  * @author mypiglet
  *
  */
-public class NamedParameterJdbcTemplateTest extends DataSourceTest {
+public class CodeAutoTemplateTest extends DataSourceTest {
 
+	private JdbcOperations jdbc;
 	private NamedParameterJdbcOperations namedJdbc;
 
 	@BeforeTest
 	public void test() {
+		jdbc = new JdbcTemplate(this.getDataSource());
 		namedJdbc = new NamedParameterJdbcTemplate(this.getDataSource());
+		Assert.assertNotNull(jdbc);
 		Assert.assertNotNull(namedJdbc);
 	}
 
+	/*
+	 * 返回结果映射简化
+	 */
+	@Test(enabled = false, priority = 1)
+	public void codeAutoTest2() {
+
+		List<User> list = this.jdbc.query("SELECT * FROM demo_user", BeanPropertyRowMapper.newInstance(User.class));
+		Assert.assertEquals(list.size() > 0, true);
+		System.out.println(list.size());
+
+	}
+
 	@Test(enabled = false)
-	public void namedJdbcTest2() {
+	public void codeAutoTest3() {
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("NAME", "sss");
-		paramMap.put("PASSWORD", "234");
-		int n = this.namedJdbc.update("INSERT INTO demo_user(NAME,PASSWORD) VALUES(:NAME,:PASSWORD)", paramMap);
-
-		System.out.println(n);
+		List<User> list = this.jdbc.query("SELECT * FROM demo_user WHERE ID=?", new Object[] { 2 },
+				BeanPropertyRowMapper.newInstance(User.class));
+		Assert.assertEquals(list.size() > 0, true);
+		System.out.println(list.size());
 
 	}
 
 	@Test(enabled = true)
-	public void namedJdbcTest3() {
+	public void codeAutoTest4() {
 
-		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-		mapSqlParameterSource = mapSqlParameterSource.addValue("NAME", "qqq", JDBCType.VARCHAR.getVendorTypeNumber());
-		mapSqlParameterSource = mapSqlParameterSource.addValue("PASSWORD", "333",
-				JDBCType.VARCHAR.getVendorTypeNumber());
-		int n = this.namedJdbc.update("INSERT INTO demo_user(NAME,PASSWORD) VALUES(:NAME,:PASSWORD)",
-				mapSqlParameterSource);
+		User user = new User();
+		user.setName("asg");
+		user.setPassword("5678");
+		int n = this.namedJdbc.update("INSERT INTO demo_user(NAME,PASSWORD) VALUES(:name,:password)",
+				new BeanPropertySqlParameterSource(user));
 
 		System.out.println(n);
 
