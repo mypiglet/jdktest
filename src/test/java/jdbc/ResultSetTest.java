@@ -52,7 +52,7 @@ public class ResultSetTest extends ConnectionTest {
 	 * 
 	 * @throws ClassNotFoundException
 	 */
-	@Test(timeOut = 1000)
+	@Test(timeOut = 1000, enabled = false)
 	public void test() throws SQLException, ClassNotFoundException {
 
 		Connection connection = this.getNewConnection();
@@ -70,7 +70,7 @@ public class ResultSetTest extends ConnectionTest {
 	/**
 	 * TYPE_SCROLL_INSENSITIVE验证
 	 */
-	@Test
+	@Test(enabled = false)
 	public void test2() throws SQLException, ClassNotFoundException {
 
 		Connection connection = this.getNewConnection();

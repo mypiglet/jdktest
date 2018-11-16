@@ -35,7 +35,7 @@ public class ConnectionTest {
 		connection = getNewConnection();
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void connectionTest() throws SQLException {
 
 		com.mysql.jdbc.Connection mysqlConnection = connection.unwrap(com.mysql.jdbc.Connection.class);

@@ -27,7 +27,7 @@ public class DaoTest extends ConnectionTest {
 	private final static String SQL_SELECT_USER = "SELECT * FROM demo_user WHERE PASSWORD='123'";
 	private final static String SQL_DELETE_USER = "DELETE FROM demo_user WHERE PASSWORD=?";
 
-	@Test
+	@Test(enabled = false)
 	public void insertTest() throws ClassNotFoundException, SQLException {
 
 		Connection con = this.getNewConnection();
@@ -55,7 +55,7 @@ public class DaoTest extends ConnectionTest {
 
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void deleteTest() throws ClassNotFoundException, SQLException {
 
 		Connection con = this.getNewConnection();
@@ -65,7 +65,7 @@ public class DaoTest extends ConnectionTest {
 		System.out.println(ii);
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void updateTest() throws ClassNotFoundException, SQLException {
 
 		Connection con = this.getNewConnection();
@@ -76,7 +76,7 @@ public class DaoTest extends ConnectionTest {
 
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void queryTest() throws ClassNotFoundException, SQLException {
 
 		Connection con = this.getNewConnection();

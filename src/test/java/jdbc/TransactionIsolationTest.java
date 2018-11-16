@@ -34,7 +34,7 @@ public class TransactionIsolationTest extends ConnectionTest {
 		transactionIsolationTest(Connection.TRANSACTION_REPEATABLE_READ);
 	}
 	
-	@Test(timeOut = 1000,enabled = false)
+	@Test(timeOut = 1000, enabled = false)
 	public void test2() throws ClassNotFoundException, SQLException {
 		transactionIsolationTest(Connection.TRANSACTION_SERIALIZABLE);
 	}
@@ -54,7 +54,7 @@ public class TransactionIsolationTest extends ConnectionTest {
 	 * 可能出现任何事物并发问题，什么都不处理;
 	 * 性能最好;
 	 */
-	@Test
+	@Test(enabled = false)
 	public void test4() throws ClassNotFoundException, SQLException {
 		transactionIsolationTest(Connection.TRANSACTION_READ_UNCOMMITTED);
 	}
