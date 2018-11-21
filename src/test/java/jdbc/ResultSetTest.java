@@ -125,8 +125,7 @@ public class ResultSetTest extends ConnectionTest {
 	}
 
 	/**
-	 * 验证【没起作用】
-	 * 可保持性（Holdability）; 指当ResultSet的结果被提交时，是被关闭还是不被关闭;
+	 * 验证【没起作用】 可保持性（Holdability）; 指当ResultSet的结果被提交时，是被关闭还是不被关闭;
 	 * 在JDBC3.0中，我们可以设置ResultSet是否关闭; 可保持性级别：
 	 * 1、ResultSet.HOLD_CURSORS_OVER_COMMIT（1）:表示修改提交时，不关闭数据库;
 	 * 2、ResultSet.CLOSE_CURSORS_AT_COMMIT（2）：表示修改提交时ResultSet关闭;
@@ -149,6 +148,28 @@ public class ResultSetTest extends ConnectionTest {
 		}
 		while (rs.next()) {
 			System.out.println(rs.getString("password"));
+		}
+
+	}
+
+	/**
+	 * 多数据源操作；
+	 * 前提jdbcURL参数allowMultiQueries设置为true；
+	 */
+	@Test(enabled = true)
+	public void getMoreResultsTest() throws ClassNotFoundException, SQLException {
+
+		String sql = "SELECT SERIAL_NO FROM demo_user_counter FOR UPDATE;UPDATE demo_user_counter SET SERIAL_NO=SERIAL_NO+1;COMMIT;";
+		Connection connection = this.getNewConnection();
+		Statement statement = connection.createStatement();
+		boolean hasResultSet = statement.execute(sql);
+		if (hasResultSet) {
+			ResultSet rs = statement.getResultSet();
+			while (rs.next()) {
+				System.out.println(rs.getString("SERIAL_NO"));
+			}
+			hasResultSet = statement.getMoreResults();
+			Assert.assertEquals(hasResultSet, false);
 		}
 
 	}

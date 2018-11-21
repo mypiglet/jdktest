@@ -89,11 +89,13 @@ public class ConnectionTest {
 	 * 
 	 * MySql的JDBC连接的url中要加rewriteBatchedStatements参数，并保证5.1.13以上版本的驱动，
 	 * 才能实现高性能的批量插入；
+	 * 
+	 * allowMultiQueries：允许一个statement执行多个用;分割的sql，默认false；
 	 */
 	public Connection getNewConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
 		return DriverManager.getConnection(
-				"jdbc:mysql://127.0.0.1:3306/spring_rest?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true",
+				"jdbc:mysql://127.0.0.1:3306/spring_rest?useUnicode=true&characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true&useServerPrepStmts=true&cachePrepStmts=true&allowMultiQueries=true",
 				"root", "123456");
 	}
 

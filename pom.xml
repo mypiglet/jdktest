@@ -17,6 +17,7 @@
 		<hikaricp.version>2.5.1</hikaricp.version>
 		<log4j.version>2.11.1</log4j.version>
 		<spring.version>4.3.10.RELEASE</spring.version>
+		<protobuf.version>3.6.1</protobuf.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -44,6 +45,19 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- 结束 jdbcTemplate -->
+
+		<!-- 开始 protobuf -->
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>${protobuf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.protobuf-java-format</groupId>
+			<artifactId>protobuf-java-format</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<!-- 结束 protobuf -->
 
 		<!-- 开始 log4j2 -->
 		<dependency>
