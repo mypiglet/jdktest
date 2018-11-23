@@ -1,11 +1,14 @@
 package lang.annotation;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
+ * 元注解（meta-annotation）
+ * 
  * Retention(保留)注解说明，这种类型的注解会被保留到那个阶段，有三个值： 1、RetentionPolicy.SOURCE ——
  * 这种类型的Annotations只在源代码级别保留,编译时就会被忽略 ； 2、RetentionPolicy.CLASS ——
  * 这种类型的Annotations编译时被保留,在class文件中存在,但JVM将会忽略； 3、RetentionPolicy.RUNTIME ——
@@ -26,7 +29,7 @@ import org.testng.annotations.Test;
  * @author mypiglet
  *
  */
-public class AnnotationTest implements Cloud {
+public class AnnotationTest extends BaseCloud implements Cloud {
 
 	@Test
 	public void test() {
@@ -43,6 +46,13 @@ public class AnnotationTest implements Cloud {
 				Assert.assertEquals(myCloud.value(), "hello");
 			}
 		}
+		
+		//getFields()获得某个类的所有的公共（public）的字段，包括父类。 
+		//getDeclaredFields()获得某个类的所有申明的字段，即包括public、private和proteced， 
+		//但是不包括父类的申明字段。 同样类似的还有getConstructors()和getDeclaredConstructors()， getMethods()和getDeclaredMethods()。 
+		//clazz.getAnnotations()可以打印出当前类的注解和父类的注解 
+		//clazz.getDeclaredAnnotations()只会打印出当前类的注解 
+		System.out.println(Arrays.toString(AnnotationTest.class.getAnnotations()));
 
 	}
 
