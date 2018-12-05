@@ -14,10 +14,27 @@
 		<java.version>1.8</java.version>
 		<testng.version>6.10</testng.version>
 		<mysql.version>5.1.43</mysql.version>
+		<javassist.version>3.24.0-GA</javassist.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>tools</artifactId>
+			<version>1.8</version>
+			<scope>system</scope>
+			<systemPath>${java.home}/../lib/tools.jar</systemPath>
+		</dependency>
+
+		<!-- 开始 字节码操作相关 -->
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${javassist.version}</version>
+		</dependency>
+		<!-- 结束 字节码操作相关 -->
+
 		<!-- 开始 mysql驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -25,6 +42,9 @@
 			<version>${mysql.version}</version>
 		</dependency>
 		<!-- 结束 mysql驱动 -->
+
+		<!-- <dependency> <groupId>com.google.auto.service</groupId> <artifactId>auto-service</artifactId> 
+			<version>1.0-rc4</version> </dependency> -->
 
 		<!-- 开始 单元测试 -->
 		<dependency>
@@ -41,9 +61,28 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<compilerArgument>
+						-proc:none
+					</compilerArgument>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.0</version>
+				<!-- 绑定source插件到Maven的生命周期,并在生命周期后执行绑定的source的goal -->
+				<executions>
+					<execution>
+						<!-- 绑定source插件到Maven的生命周期 -->
+						<phase>compile</phase>
+						<!--在生命周期后执行绑定的source插件的goals -->
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
